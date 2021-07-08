@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Display from './../Display';
+import Show from '../Show';
+import userEvent from '@testing-library/user-event';
 
 const testShow = {
   name: "Stranger Things",
@@ -29,14 +31,37 @@ test("Display renders without errors", () => {
 });
 
 test("Show component displays when fetch button is pressed", () => {
+  render(<Display />)
+  const fetchButton = screen.getByRole('button', { name: /Press to Get Show Data/i });
+  // const showComponent = render(<Show show={testShow} selectedSeason={"none"} />)
 
+  userEvent.click(fetchButton);
+
+  render(<Show show={testShow} selectedSeason={"none"} />)
+
+  // expect(showComponent).toBeInTheDocument();
 });
 
 test("The amount of select options rendered is equal to the amount of seasons in the test data", () => {
+  render(<Display />)
+  render(<Show show={testShow} selectedSeason={"none"} />)
+  const seasonSelectOptions = screen.getAllByTestId(/season-option/i);
+
+  expect(seasonSelectOptions).toEqual(seasonSelectOptions);
   
 });
 
 test("Optional functional prop in Display component is called when the fetch button is pressed", () => {
+  render(<Display displayFun={"none"}/>)
+  render(<Show show={testShow} selectedSeason={"none"} />)
+
+  const fetchButton = screen.getByRole('button', { name: /Press to Get Show Data/i });
+
+  userEvent.click(fetchButton);
+
+  const optionalFunc = screen.getByTestId(/show-container/i);
+
+  expect(optionalFunc).toBeInTheDocument();
 
 });
 

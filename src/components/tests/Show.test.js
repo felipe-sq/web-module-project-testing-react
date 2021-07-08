@@ -55,7 +55,11 @@ test('handleSelect is called when an season is selected', () => {
 });
 
 test('component renders when no seasons are selected and when rerenders with a season passed in', () => {
-    render(<Show show={testShow} selectedSeason={"none"} />);
+
+    const { rerender } = render(<Show show={testShow} selectedSeason={"none"} />);
+
+    // render(<Show show={testShow} selectedSeason={"none"} />);
+    rerender(<Show show={testShow} selectedSeason={1}/>)
     const seasonsOptions = screen.getByText(/Select a Season/i);
     const selectedSeason = screen.getByText(/Season 1/i);
 
