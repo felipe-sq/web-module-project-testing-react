@@ -2,10 +2,43 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Display from './../Display';
 
+const testShow = {
+  name: "Stranger Things",
+  summary: "<p>A love letter to the '80s classics that captivated a generation, <b>Stranger Things</b> is set in 1983 Indiana, where a young boy vanishes into thin air. As friends, family and local police search for answers, they are drawn into an extraordinary mystery involving top-secret government experiments, terrifying supernatural forces and one very strange little girl.</p>",
+  seasons: [
+      {
+          id:0,
+          name: "Season 1",
+          episodes: []
+      },
+      {
+          id:1,
+          name: "Season 2",
+          episodes: []
+      },
+      {
+          id:2,
+          name: "Season 3",
+          episodes: []
+      }
+  ]
+}
+
 test("Display renders without errors", () => {
   render(<Display />)
 });
 
+test("Show component displays when fetch button is pressed", () => {
+
+});
+
+test("The amount of select options rendered is equal to the amount of seasons in the test data", () => {
+  
+});
+
+test("Optional functional prop in Display component is called when the fetch button is pressed", () => {
+
+});
 
 
 
