@@ -1,26 +1,74 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Show from './../Show';
 
 const testShow = {
     //add in approprate test data structure here.
+    name: "Stranger Things",
+    summary: "<p>A love letter to the '80s classics that captivated a generation, <b>Stranger Things</b> is set in 1983 Indiana, where a young boy vanishes into thin air. As friends, family and local police search for answers, they are drawn into an extraordinary mystery involving top-secret government experiments, terrifying supernatural forces and one very strange little girl.</p>",
+    seasons: [
+        {
+            id:0,
+            name: "Season 1",
+            episodes: []
+        },
+        {
+            id:1,
+            name: "Season 2",
+            episodes: []
+        },
+        {
+            id:2,
+            name: "Season 3",
+            episodes: []
+        }
+    ]
 }
 
 test('renders testShow and no selected Season without errors', ()=>{
+    render(<Show show={testShow} selectedSeason={"none"} />)
 });
 
 test('renders Loading component when prop show is null', () => {
+    render(<Show show={null} selectedSeason={"none"} />)
+    const loadingMessage = screen.getByText(/Fetching data/i);
+
+    expect(loadingMessage).toBeInTheDocument();
 });
 
 test('renders same number of options seasons are passed in', ()=>{
+    render(<Show show={testShow} selectedSeason={"none"} />)
+    const seasonSelectOptions = screen.getAllByTestId(/season-option/i);
+
+    expect(seasonSelectOptions).toEqual(seasonSelectOptions);
 });
 
 test('handleSelect is called when an season is selected', () => {
+    render(<Show show={testShow} selectedSeason={"none"} />)
+    const seasonsOptions = screen.getByText(/Select a Season/i);
+
+    userEvent.click(seasonsOptions);
+
+    expect(seasonsOptions).toBeInTheDocument();
 });
 
 test('component renders when no seasons are selected and when rerenders with a season passed in', () => {
+
+    const { rerender } = render(<Show show={testShow} selectedSeason={"none"} />);
+
+    // render(<Show show={testShow} selectedSeason={"none"} />);
+    rerender(<Show show={testShow} selectedSeason={1}/>)
+    const seasonsOptions = screen.getByText(/Select a Season/i);
+    const selectedSeason = screen.getByText(/Season 1/i);
+
+    expect(seasonsOptions).toBeInTheDocument();
+
+    userEvent.click(seasonsOptions);
+    userEvent.click(selectedSeason);
+
+    expect(selectedSeason).toBeInTheDocument();
 });
 
 //Tasks:
